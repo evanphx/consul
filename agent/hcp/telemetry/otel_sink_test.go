@@ -147,8 +147,9 @@ func TestOTELSink(t *testing.T) {
 
 	ctx := context.Background()
 	opts := &OTELSinkOpts{
-		Logger: hclog.New(&hclog.LoggerOptions{Output: io.Discard}),
-		Reader: reader,
+		Logger:  hclog.New(&hclog.LoggerOptions{Output: io.Discard}),
+		Reader:  reader,
+		Filters: []string{"raft", "autopilot"},
 	}
 
 	sink, err := NewOTELSink(opts)
@@ -176,12 +177,18 @@ func TestOTELSink(t *testing.T) {
 
 	// Validate resource
 	require.Equal(t, resource.NewSchemaless(), collected.Resource)
+	require.Equal(t, 1, len(collected.ScopeMetrics))
 
-	// Validate metrics
-	for _, actual := range collected.ScopeMetrics[0].Metrics {
-		name := actual.Name
-		expected, ok := expectedMetrics[name]
-		require.True(t, ok, "metric key %s should be in expectedMetrics map", name)
+	collectedMetrics := collected.ScopeMetrics[0].Metrics
+
+	collectedMetricsMap := make(map[string]metricdata.Metrics, len(collectedMetrics))
+	for _, v := range collectedMetrics {
+		collectedMetricsMap[v.Name] = v
+	}
+
+	for key, expected := range expectedMetrics {
+		actual, ok := collectedMetricsMap[key]
+		require.True(t, ok, "metric key %s should be in expectedMetrics map", key)
 		isSameMetrics(t, expected, actual)
 	}
 }
