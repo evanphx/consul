@@ -53,7 +53,7 @@ func TestBasic(t *testing.T) {
 
 	// upgrade the cluster to the Target version
 	t.Logf("initiating standard upgrade to version=%q", utils.TargetVersion)
-	err = cluster.StandardUpgrade(t, context.Background(), utils.TargetVersion)
+	err = cluster.StandardUpgrade(t, context.Background(), utils.GetTargetImageName(), utils.TargetVersion)
 
 	require.NoError(t, err)
 	libcluster.WaitForLeader(t, cluster, client)

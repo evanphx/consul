@@ -38,7 +38,7 @@ func TestACL_NodeToken(t *testing.T) {
 		cluster.Agents[1].GetAgentName())
 	require.NoError(t, err)
 
-	err = cluster.StandardUpgrade(t, context.Background(), utils.TargetVersion)
+	err = cluster.StandardUpgrade(t, context.Background(), utils.GetTargetImageName(), utils.TargetVersion)
 	require.NoError(t, err)
 
 	// Post upgrade validation: agent token can be used to query the node

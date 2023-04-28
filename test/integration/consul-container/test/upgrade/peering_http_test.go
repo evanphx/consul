@@ -295,11 +295,11 @@ func peeringUpgrade(t *testing.T, accepting, dialing *libtopology.BuiltCluster, 
 	_, staticClientPort := dialing.Container.GetAddr()
 
 	// Upgrade the accepting cluster and assert peering is still ACTIVE
-	require.NoError(t, accepting.Cluster.StandardUpgrade(t, context.Background(), targetVersion))
+	require.NoError(t, accepting.Cluster.StandardUpgrade(t, context.Background(), utils.GetTargetImageName(), targetVersion))
 	libassert.PeeringStatus(t, acceptingClient, libtopology.AcceptingPeerName, api.PeeringStateActive)
 	libassert.PeeringStatus(t, dialingClient, libtopology.DialingPeerName, api.PeeringStateActive)
 
-	require.NoError(t, dialing.Cluster.StandardUpgrade(t, context.Background(), targetVersion))
+	require.NoError(t, dialing.Cluster.StandardUpgrade(t, context.Background(), utils.GetTargetImageName(), targetVersion))
 	libassert.PeeringStatus(t, acceptingClient, libtopology.AcceptingPeerName, api.PeeringStateActive)
 	libassert.PeeringStatus(t, dialingClient, libtopology.DialingPeerName, api.PeeringStateActive)
 

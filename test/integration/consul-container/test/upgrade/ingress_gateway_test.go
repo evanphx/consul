@@ -481,7 +481,7 @@ func TestIngressGateway_UpgradeToTarget_fromLatest(t *testing.T) {
 
 	// Upgrade the cluster to utils.utils.TargetVersion
 	t.Logf("Upgrade to version %s", utils.TargetVersion)
-	err = cluster.StandardUpgrade(t, context.Background(), utils.TargetVersion)
+	err = cluster.StandardUpgrade(t, context.Background(), utils.GetTargetImageName(), utils.TargetVersion)
 	require.NoError(t, err)
 	require.NoError(t, igw.Restart())
 
