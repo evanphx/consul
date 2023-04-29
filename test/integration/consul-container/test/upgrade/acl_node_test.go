@@ -27,6 +27,7 @@ func TestACL_NodeToken(t *testing.T) {
 		NumClients: 1,
 		BuildOpts: &libcluster.BuildOptions{
 			Datacenter:           "dc1",
+			ConsulImageName:      utils.GetLatestImageName(),
 			ConsulVersion:        utils.LatestVersion,
 			InjectAutoEncryption: false,
 			ACLEnabled:           true,

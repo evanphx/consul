@@ -27,7 +27,7 @@ import (
 func TestPeering_ControlPlaneMGW(t *testing.T) {
 	t.Parallel()
 
-	accepting, dialing := libtopology.BasicPeeringTwoClustersSetup(t, utils.LatestVersion, true)
+	accepting, dialing := libtopology.BasicPeeringTwoClustersSetup(t, utils.GetLatestImageName(), utils.LatestVersion, true)
 	var (
 		acceptingCluster = accepting.Cluster
 		dialingCluster   = dialing.Cluster

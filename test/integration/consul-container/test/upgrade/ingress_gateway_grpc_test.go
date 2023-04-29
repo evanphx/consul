@@ -25,8 +25,9 @@ func TestIngressGateway_GRPC_UpgradeToTarget_fromLatest(t *testing.T) {
 		NumServers: 1,
 		NumClients: 1,
 		BuildOpts: &libcluster.BuildOptions{
-			Datacenter:    "dc1",
-			ConsulVersion: utils.LatestVersion,
+			Datacenter:      "dc1",
+			ConsulImageName: utils.GetLatestImageName(),
+			ConsulVersion:   utils.LatestVersion,
 		},
 		ApplyDefaultProxySettings: true,
 	})

@@ -320,6 +320,7 @@ func TestTrafficManagement_ResolverSubsetRedirect(t *testing.T) {
 
 func setup(t *testing.T) (*libcluster.Cluster, libservice.Service, libservice.Service) {
 	buildOpts := &libcluster.BuildOptions{
+		ConsulImageName:      utils.GetLatestImageName(),
 		ConsulVersion:        utils.LatestVersion,
 		Datacenter:           "dc1",
 		InjectAutoEncryption: true,
