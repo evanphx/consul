@@ -827,6 +827,16 @@ func TestStructs_NodeService_ValidateConnectProxy(t *testing.T) {
 		},
 
 		{
+			"connect-proxy: invalid opaque config",
+			func(x *NodeService) {
+				x.Proxy.Config = map[string]interface{}{
+					"envoy_hcp_metrics_bind_socket_dir": "/Consul/is/a/networking/tool/that/enables/securing/your/network/connectivity/",
+				}
+			},
+			"Proxy.Config: envoy_hcp_metrics_bind_socket_dir",
+		},
+
+		{
 			"connect-proxy: no Proxy.DestinationServiceName",
 			func(x *NodeService) { x.Proxy.DestinationServiceName = "" },
 			"Proxy.DestinationServiceName must be",
